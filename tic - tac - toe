@@ -1,0 +1,72 @@
+import random
+board = [["-" for x in range(3)] for y in range(3)]
+
+
+def board_is_full():
+    num = 0
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] != "-":
+                num += 1
+    if num == 9:
+        return True
+    else:
+        return False
+
+
+def show_the_board():
+    for i in range(3):
+        print(board[i])
+
+
+def check_the_win(sign):  # sign in either 0 or x
+    for j in range(3):
+        if board[0][j] == sign and board[1][j] == sign and board[2][j] == sign:
+            print(sign, " wins")
+            exit()
+    for i in range(3):
+        if board[i][0] == sign and board[i][1] == sign and board[i][2] == sign:
+            print(sign, " wins")
+            exit()
+    if board[0][0] == sign and board[1][1] == sign and board[2][2] == sign:
+        print(sign, " wins")
+        exit()
+    if board[2][0] == sign and board[1][1] == sign and board[0][2] == sign:
+        print(sign, " wins")
+        exit()
+
+
+def start():
+    first_number = random.randint(1, 2)
+    if first_number == 1:
+        return "0"
+    else:
+        return "x"
+
+
+first_sign = start()
+if first_sign == "0":
+    second_sign = "x"
+else:
+    second_sign = "0"
+while True:
+    location = input().split()
+    row = int(location[0]) - 1
+    column = int(location[1]) - 1
+    board[column][row] = first_sign
+    show_the_board()
+    check_the_win(first_sign)
+    board_is_full()
+    if board_is_full():
+        print("Draw")
+        exit()
+    location = input().split()
+    row = int(location[0]) - 1
+    column = int(location[1]) - 1
+    board[column][row] = second_sign
+    show_the_board()
+    check_the_win(second_sign)
+    board_is_full()
+    if board_is_full():
+        print("Draw")
+        exit()
